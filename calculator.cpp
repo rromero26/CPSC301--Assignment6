@@ -207,9 +207,14 @@ digit * addNumbers(digit * left, digit * right){
     //------------------------------------------------------------------------//
 
     // ERROR: FROM HERE CORE DUMP COMES UP
+    cout <<"left: " << leftCounter << endl;
+    cout <<"right: " << rightCounter << endl;
+    string test;
+    cin >> test;
 
     if (leftCounter == rightCounter){                 //If Left and RIght are the same, do this
-        while ( (left != NULL) && (right != NULL) ){
+
+        while ( (left != NULL) || (right != NULL) ){
             temp = left->data + right->data + carry;
             if (temp >= 10){
               carry = 1;
@@ -224,7 +229,7 @@ digit * addNumbers(digit * left, digit * right){
               right = right->next;
               myNum = myNum->next;
           }
-        return head;
+      return head;
       }
     //-------------------------------------------------------------------------------------------------//
     if (rightCounter > leftCounter){    //switches Left and Right; makes Left have the larger number   //
@@ -233,12 +238,8 @@ digit * addNumbers(digit * left, digit * right){
       right = tempPtr;                                                                                 //
     }                                                                                                  //
     //-------------------------------------------------------------------------------------------------//
-    //string test;
-    cout <<"All works from here?";
-    cin >> test;
 
     //--- From here on, left will always contain longer linklist ---
-
     while (right != NULL){
         temp = left->data + right->data + carry;
         if (temp >= 10){
