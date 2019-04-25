@@ -178,6 +178,8 @@ void deleteNum(digit * num){
 }
 
 
+
+
 digit * addNumbers(digit * left, digit * right){
     //  Left and Right point to entire lists.
     //  They're in reverse order (ie: 123 = 3->2->1-> null)
@@ -188,33 +190,9 @@ digit * addNumbers(digit * left, digit * right){
     int temp = 0;                 //tempary int holder
     int carry = 0;                //holds 1 if carry is needed for next node
 
-    //----counts left and right linklist--------------------------------------//
-                                                                              //
-    digit *tempLeft = left;       //create tempPtr to count digits on Left    //
-    digit *tempRight = right;     //create tempPtr to count digits in Right   //
-    int leftCounter = 0;                                                      //
-    int rightCounter = 0;                                                     //
-                                                                              //
-    while (tempLeft != NULL){       //counter: how long Left linklist is      //
-      leftCounter++;                                                          //
-      tempLeft = tempLeft->next;                                              //
-    }                                                                         //
-                                                                              //
-    while (tempRight != NULL){      //counter: how long right linklist is     //
-      rightCounter++;                                                         //
-      tempRight = tempRight->next;                                            //
-    }                                                                         //
-    //------------------------------------------------------------------------//
+    // ERROR: FROM HERE CORE DUMP COMES UP               //If Left and RIght are the same, do this
 
-    // ERROR: FROM HERE CORE DUMP COMES UP
-    cout <<"left: " << leftCounter << endl;
-    cout <<"right: " << rightCounter << endl;
-    string test;
-    cin >> test;
-
-    if (leftCounter == rightCounter){                 //If Left and RIght are the same, do this
-
-        while ( (left != NULL) || (right != NULL) ){
+    while ((left != NULL) && (right != NULL)){
             temp = left->data + right->data + carry;
             if (temp >= 10){
               carry = 1;
@@ -229,19 +207,10 @@ digit * addNumbers(digit * left, digit * right){
               right = right->next;
               myNum = myNum->next;
           }
-      return head;
-      }
-    //-------------------------------------------------------------------------------------------------//
-    if (rightCounter > leftCounter){    //switches Left and Right; makes Left have the larger number   //
-      digit *tempPtr = left;            // and contiue as to last part of function where Left > Right  //
-      left = right;                                                                                    //
-      right = tempPtr;                                                                                 //
-    }                                                                                                  //
-    //-------------------------------------------------------------------------------------------------//
+    //----------------------------------
 
-    //--- From here on, left will always contain longer linklist ---
     while (right != NULL){
-        temp = left->data + right->data + carry;
+        temp = right->data + carry;
         if (temp >= 10){
           carry = 1;
           temp = temp - 10;
@@ -251,20 +220,29 @@ digit * addNumbers(digit * left, digit * right){
           carry = 0;
           myNum->data = temp;
         }
-          left = left->next;
           right = right->next;
           myNum = myNum->next;
     }
     while (left != NULL){
-        temp = left->data + carry;
+      temp = left->data + carry;
+      if (temp >= 10){
+        carry = 1;
+        temp = temp - 10;
+        myNum->data = temp;
+      }
+      else{
         carry = 0;
         myNum->data = temp;
-
+      }
         left = left->next;
-    }
+        myNum = myNum->next;
+  }
 
     return head;
   }
+
+
+
 
 //-----------------PROVIDED BY INSTRUCTOR-----------------
 void subtractCarry(digit * head, digit * prev){
